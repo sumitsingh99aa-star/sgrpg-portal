@@ -7,144 +7,151 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --primary: #0f172a; --accent: #6366f1; --bg: #f8fafc; --glass: rgba(255, 255, 255, 0.8); --text: #1e293b;
-            --danger: #ff4757; --success: #2ed573; --white: #ffffff;
+            --primary: #0f172a; --accent: #6366f1; --bg: #f8fafc; --glass: rgba(255, 255, 255, 0.85); --text: #1e293b;
+            --danger: #ff4757; --success: #2ed573; --purple: #a855f7;
         }
-        .dark-theme {
-            --primary: #1e293b; --accent: #818cf8; --bg: #020617; --glass: rgba(30, 41, 59, 0.7); --text: #f1f5f9; --white: #111111;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* Smooth Page Entrance Animation */
-        @keyframes reveal { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-        /* Navigation */
-        nav { background: var(--glass); backdrop-filter: blur(15px); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        nav { background: var(--glass); backdrop-filter: blur(15px); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--accent); box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-        .college-logo { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--accent); background: white; object-fit: contain; }
-        .logo-text { font-weight: 800; font-size: 16px; line-height: 1.2; }
+        .college-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--accent); background: white; }
         
-        .container { padding: 40px 5%; max-width: 1200px; margin: auto; position: relative; }
-        .page { display: none; opacity: 0; }
-        .page.active { display: block; animation: reveal 0.6s ease forwards; }
+        .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
+        .page { display: none; animation: slideUp 0.6s ease forwards; }
+        .page.active { display: block; }
 
-        /* Hero Section with Parallax Effect */
-        .hero { 
-            text-align: center; padding: 80px 20px; border-radius: 40px; margin-bottom: 40px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(168, 85, 247, 0.9)), url('https://images.unsplash.com/photo-1541339907198-e08756defe93?auto=format&fit=crop&w=1200&q=80');
-            background-size: cover; background-blend-mode: overlay; color: white; box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
-            animation: reveal 0.8s ease forwards;
-        }
-        .hero h1 { font-size: clamp(30px, 6vw, 55px); font-weight: 800; margin-bottom: 10px; text-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .card { background: var(--glass); backdrop-filter: blur(20px); padding: 25px; border-radius: 30px; border: 1px solid rgba(99, 102, 241, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15); }
 
-        /* Glass Cards with Glow */
-        .card { background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.05); text-align: center; }
-        .card:hover { transform: translateY(-12px) scale(1.03); box-shadow: 0 30px 60px rgba(0,0,0,0.12); border-color: var(--accent); }
-        
-        /* Expert Buttons with Icons & Glow */
         .main-btn { 
-            display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--white); border: none; 
-            padding: 12px 28px; border-radius: 15px; font-weight: 700; cursor: pointer; text-transform: uppercase; 
-            font-size: 11px; letter-spacing: 1px; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: white; border: none; 
+            padding: 14px 28px; border-radius: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 11px;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
         }
-        .main-btn:hover { background: var(--primary); transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 25px rgba(0,0,0,0.2); }
-        .main-btn:active { transform: scale(0.95); }
+        .main-btn:hover { background: var(--primary); transform: scale(1.05); }
 
-        input { width: 100%; padding: 15px; margin-top: 15px; border-radius: 15px; border: 2px solid rgba(0,0,0,0.05); background: #fff; color: #000; outline: none; font-size: 14px; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+        input { width: 100%; padding: 16px; margin-top: 15px; border-radius: 15px; border: 2px solid #eee; outline: none; font-size: 14px; }
+        input:focus { border-color: var(--accent); }
 
-        /* Badge Logic */
-        .badge { display: inline-block; padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 12px; margin-top: 15px; letter-spacing: 1px; }
-        .pass { background: rgba(46, 213, 115, 0.2); color: var(--success); border: 2px solid var(--success); box-shadow: 0 0 20px rgba(46, 213, 115, 0.3); }
-        .fail { background: rgba(255, 71, 87, 0.2); color: var(--danger); border: 2px solid var(--danger); box-shadow: 0 0 20px rgba(255, 71, 87, 0.3); }
+        /* Event Styling */
+        .event-list { text-align: left; margin-top: 20px; }
+        .event-item { display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: 20px; background: white; margin-bottom: 12px; border-left: 5px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .event-date { background: var(--accent); color: white; padding: 8px 12px; border-radius: 12px; font-weight: 800; font-size: 12px; min-width: 70px; text-align: center; }
+        
+        .badge { display: inline-block; padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 11px; margin-top: 10px; text-transform: uppercase; }
+        .pass { background: rgba(46, 213, 115, 0.15); color: var(--success); border: 1px solid var(--success); }
+        .fail { background: rgba(255, 71, 87, 0.15); color: var(--danger); border: 1px solid var(--danger); }
 
-        /* Footer */
-        footer { background: var(--primary); color: white; padding: 60px 5%; text-align: center; margin-top: 60px; border-radius: 50px 50px 0 0; }
-        .shreya-credit { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 3px; display: block; margin-top: 20px; font-size: 18px; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
-
-        #clock { font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 8px 20px; border-radius: 50px; font-size: 14px; border: 1px solid var(--accent); }
+        footer { background: var(--primary); color: white; padding: 50px; text-align: center; border-radius: 40px 40px 0 0; margin-top: 50px; }
+        #clock { font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 8px 18px; border-radius: 50px; border: 1px solid var(--accent); }
     </style>
 </head>
 <body onload="updateTime()">
 
     <nav>
-        <div class="logo-area" onclick="showPage('homePage')">
-            <img src="logo.gif" alt="SGRPG Logo" class="college-logo">
-            <div class="logo-text">S.G.R.P.G. COLLEGE<br><span style="font-weight:400; font-size:11px; color:var(--accent)">DOBHI, JAUNPUR</span></div>
+        <div class="logo-area" onclick="location.reload()">
+            <img src="logo.gif" alt="SGRPG" class="college-logo">
+            <div>
+                <p style="font-weight:800; font-size:15px;">S.G.R.P.G. COLLEGE</p>
+                <p style="font-size:10px; color:var(--accent)">ELITE STUDENT PORTAL</p>
+            </div>
         </div>
         <div style="display:flex; align-items:center; gap:15px;">
             <div id="clock">00:00:00</div>
-            <button class="main-btn" onclick="toggleTheme()" style="background:#475569; padding:10px;">🌓</button>
-            <button class="main-btn" onclick="showPage('loginPage')" id="loginNavBtn"><span>✨</span> LOGIN</button>
+            <button class="main-btn" onclick="showPage('loginPage')" id="loginNavBtn">👤 LOGIN</button>
         </div>
     </nav>
 
     <div class="container">
         
         <div id="homePage" class="page active">
-            <div class="hero">
-                <h1>Academic Intelligence Portal</h1>
-                <p style="max-width: 750px; margin: 25px auto; font-size: 18px; opacity: 0.9;">Secure Student Information and Management System of S. G. R. P. G. College Dobhi Jaunpur.</p>
-                <button class="main-btn" style="background:white; color:var(--accent); padding:18px 45px; font-size:14px;" onclick="showPage('loginPage')"><span>🚀</span> ENTER PORTAL</button>
+            <div class="card" style="background: linear-gradient(135deg, var(--accent), var(--purple)); color: white; padding: 80px 20px;">
+                <h1 style="font-size: 40px; margin-bottom: 10px;">Welcome, Students! ✨</h1>
+                <p style="opacity: 0.9; font-size: 18px; margin-bottom: 30px;">Your All-in-One Academic Gateway for 2026.</p>
+                <button class="main-btn" style="background:white; color:var(--accent);" onclick="showPage('loginPage')">GO TO DASHBOARD 🔓</button>
             </div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
-                <div class="card" style="animation: reveal 0.6s ease 0.1s forwards; opacity: 0;">
-                    <span style="font-size: 40px;">📊</span>
-                    <h2 style="margin: 15px 0 10px 0;">Performance Hub</h2>
-                    <p style="margin-bottom: 20px; color: #64748b; font-size: 15px;">Access real-time analytics regarding your CGPA, semester results, and internal grades.</p>
-                    <button class="main-btn" onclick="showPage('loginPage')"><span>✔️</span> VIEW RESULTS</button>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div class="card" onclick="showPage('calendarPage')" style="cursor:pointer;">
+                    <span style="font-size: 40px;">📅</span>
+                    <h3 style="margin-top:10px;">Holidays & Functions</h3>
+                    <p style="font-size:12px; color:#64748b; margin-top:5px;">Check 2026 Academic Calendar</p>
                 </div>
-                <div class="card" style="animation: reveal 0.6s ease 0.2s forwards; opacity: 0;">
+                <div class="card" onclick="window.open('https://www.google.com/maps/search/?api=1&query=S.G.R5')" style="cursor:pointer;">
                     <span style="font-size: 40px;">📍</span>
-                    <h2 style="margin: 15px 0 10px 0;">Campus Location</h2>
-                    <p style="margin-bottom: 20px; color: #64748b; font-size: 15px;">Official SGRPG Campus situated in Dobhi, Jaunpur. Dedicated to academic growth.</p>
-                    <button class="main-btn" style="background:#64748b" onclick="window.open('http://googleusercontent.com/maps.google.com/9')"><span>🌐</span> GEOLOCATION</button>
+                    <h3 style="margin-top:10px;">Campus Location</h3>
+                    <p style="font-size:12px; color:#64748b; margin-top:5px;">SGRPG Dobhi, Jaunpur (U.P.)</p>
                 </div>
             </div>
         </div>
 
         <div id="loginPage" class="page">
-            <div class="card" style="max-width: 450px; margin: 60px auto; text-align: center; border: 2px solid var(--accent); animation: reveal 0.6s ease forwards;">
-                <img src="logo.gif" width="80" style="margin-bottom:20px;">
-                <h2 style="color: var(--primary); letter-spacing: -1px; font-size: 28px;">Institutional Login</h2>
-                <p style="font-size:13px; color:#64748b; margin-bottom:20px;">Provide Full Student Name (e.g. Shreya Singh)</p>
-                <input type="text" id="userInput" placeholder="Authorized Name (Any Case)">
+            <div class="card" style="max-width: 420px; margin: 40px auto;">
+                <h2 style="font-size: 28px;">Student Access</h2>
+                <p style="color:#64748b; font-size:13px; margin-bottom:20px;">Enter your full name to proceed</p>
+                <input type="text" id="userInput" placeholder="Full Name (e.g. Sonal Singh)">
                 <input type="password" id="passInput" placeholder="Password (QWqw1234@)">
-                <button class="main-btn" style="width:100%; margin-top:25px; padding:18px; font-size:14px;" onclick="handleLogin()"><span>🔒</span> AUTHORIZE ENTRY</button>
-                <p id="err" style="color:var(--danger); font-size:12px; margin-top:15px; display:none; font-weight:800; animation: reveal 0.3s ease;">❌ ERROR: INVALID CREDENTIALS PROVIDED!</p>
+                <button class="main-btn" style="width:100%; margin-top:25px; padding:18px;" onclick="handleLogin()">AUTHORIZE LOGIN 🔒</button>
+                <p id="err" style="color:var(--danger); font-size:12px; margin-top:15px; display:none; font-weight:800;">❌ INVALID NAME OR PASSWORD!</p>
             </div>
         </div>
 
         <div id="dashPage" class="page">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-                <h1>DASHBOARD / <span id="sName" style="color:var(--accent)">-</span></h1>
-                <button class="main-btn" style="background:var(--danger);" onclick="logout()"><span>🚪</span> SIGN OUT</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+                <div>
+                    <h1 style="font-size: 32px;">Hello, <span id="sName" style="color:var(--accent)">-</span>!</h1>
+                    <p style="font-size:14px; opacity:0.7;">B.Sc. Student | SGRPG College</p>
+                </div>
+                <button class="main-btn" style="background:var(--danger);" onclick="location.reload()">LOGOUT 🚪</button>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                <div class="card" style="animation: reveal 0.6s ease 0.1s forwards; opacity: 0;">
-                    <p style="font-size:12px; font-weight:800; color:#64748b; letter-spacing:2px;">ATTENDANCE SCORE</p>
-                    <h2 style="font-size:50px; margin:10px 0;" id="sAtt">0%</h2>
-                    <div style="width:100%; height:12px; background:#e2e8f0; border-radius:20px; overflow:hidden;">
-                        <div id="barFill" style="height:100%; background:var(--accent); width:0; transition: 2s ease-out;"></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                <div class="card">
+                    <h3 style="text-align:left; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:15px;">💰 Fee Status</h3>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Total Fees:</span> <b>₹30,000</b></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Paid:</span> <b id="sPaid" style="color:var(--success)">-</b></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Balance:</span> <b id="sDue" style="color:var(--danger)">-</b></div>
+                </div>
+
+                <div class="card">
+                    <h3 style="text-align:left; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:15px;">📊 Performance</h3>
+                    <p style="text-align:left;">Attendance: <b id="sAttText">0%</b></p>
+                    <div style="width:100%; height:12px; background:#f1f5f9; border-radius:20px; overflow:hidden; margin:12px 0;">
+                        <div id="barFill" style="height:100%; background:var(--accent); width:0; transition: 2s cubic-bezier(0.1, 1, 0.1, 1);"></div>
                     </div>
-                </div>
-                <div class="card" style="animation: reveal 0.6s ease 0.2s forwards; opacity: 0;">
-                    <p style="font-size:12px; font-weight:800; color:#64748b; letter-spacing:2px;">ACADEMIC standing</p>
-                    <h2 style="font-size:50px; margin:10px 0;" id="sGPA">0.0</h2>
-                    <div id="resBadge" class="badge">STATUS: -</div>
+                    <div id="resBadge" class="badge">STATUS</div>
                 </div>
             </div>
 
-            <div class="card" style="margin-top:40px; text-align: left; animation: reveal 0.6s ease 0.3s forwards; opacity: 0;">
-                <h3 style="border-left: 6px solid var(--accent); padding-left: 20px; font-size: 22px;">Institutional Resources (PCM)</h3>
-                <div style="margin-top:25px; display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px;">
-                    <button class="main-btn" style="background:#f1f5f9; color:#1e293b; border: 1px solid #ddd;" onclick="alert('Accessing Physics Modules...')"><span>📄</span> PHYSICS NOTES</button>
-                    <button class="main-btn" style="background:#f1f5f9; color:#1e293b; border: 1px solid #ddd;" onclick="alert('Accessing Chemistry Modules...')"><span>🧪</span> CHEMISTRY NOTES</button>
-                    <button class="main-btn" style="background:#f1f5f9; color:#1e293b; border: 1px solid #ddd;" onclick="alert('Accessing Mathematics Modules...')"><span>📐</span> MATHS SYLLABUS</button>
+            <button class="main-btn" style="width:100%; margin-top:25px; background:var(--primary);" onclick="showPage('calendarPage')">📅 VIEW FULL ACADEMIC CALENDAR</button>
+        </div>
+
+        <div id="calendarPage" class="page">
+            <div style="display:flex; align-items:center; gap:15px; margin-bottom:30px;">
+                <button class="main-btn" style="background:#475569;" onclick="showPage('homePage')">← BACK</button>
+                <h2>Campus Calendar 2026</h2>
+            </div>
+
+            <div class="card">
+                <h3 style="text-align:left; margin-bottom:20px; color:var(--accent);">🌴 Gazetted Holidays 2026</h3>
+                <div class="event-list">
+                    <div class="event-item"><div class="event-date">26 JAN</div><div><b>Republic Day</b><p>National Holiday & Flag Hoisting</p></div></div>
+                    <div class="event-item"><div class="event-date">14 JAN</div><div><b>Makar Sankranti</b><p>Harvest Festival</p></div></div>
+                    <div class="event-item"><div class="event-date">03 MAR</div><div><b>Holi Break</b><p>Festival of Colors (3 Day Leave)</p></div></div>
+                    <div class="event-item"><div class="event-date">15 AUG</div><div><b>Independence Day</b><p>Campus Celebration</p></div></div>
+                    <div class="event-item"><div class="event-date">02 OCT</div><div><b>Gandhi Jayanti</b><p>Non-Violence Day</p></div></div>
+                    <div class="event-item"><div class="event-date">08 NOV</div><div><b>Deepawali</b><p>Festival of Lights Break</p></div></div>
+                </div>
+
+                <h3 style="text-align:left; margin:30px 0 20px 0; color:var(--purple);">🎭 College Functions 2026</h3>
+                <div class="event-list">
+                    <div class="event-item" style="border-left-color: var(--purple);"><div class="event-date" style="background:var(--purple)">12 FEB</div><div><b>Annual Sports Meet</b><p>Inter-Departmental Athletics</p></div></div>
+                    <div class="event-item" style="border-left-color: var(--purple);"><div class="event-date" style="background:var(--purple)">05 MAR</div><div><b>SGRPG Cultural Fest</b><p>Music, Dance & Drama Night</p></div></div>
+                    <div class="event-item" style="border-left-color: var(--purple);"><div class="event-date" style="background:var(--purple)">05 SEP</div><div><b>Teacher's Day</b><p>Special Tribute Program</p></div></div>
+                    <div class="event-item" style="border-left-color: var(--purple);"><div class="event-date" style="background:var(--purple)">20 DEC</div><div><b>Alumni Meet</b><p>Old Students Gathering</p></div></div>
                 </div>
             </div>
         </div>
@@ -152,76 +159,56 @@
     </div>
 
     <footer>
-        <h2 style="letter-spacing: 1px;">S. G. R. P. G. COLLEGE DOBHI JAUNPUR</h2>
-        <p style="font-size:14px; opacity:0.8; margin-top:15px; cursor:pointer;" onclick="window.open('https://www.google.com/maps/search/?api=1&query=S.G.R0')">
-            📍 Kerakat, subdomain, Jaunpur, Subdistrict, Jaunpur, Uttar Pradesh 222149
-        </p>
-        <span class="shreya-credit">DESIGNED BY SHREYA SINGH</span>
-        <p style="margin-top:30px; font-size:11px; opacity:0.5;">© 2026 ELITE ACADEMIC PORTAL</p>
+        <h2 style="font-weight: 800;">S.G.R.P.G. COLLEGE DOBHI, JAUNPUR</h2>
+        <p style="font-size:12px; opacity:0.7; margin-top:10px;">Official Academic Portal - Version 4.0</p>
+        <span style="display:block; margin-top:30px; font-weight:800; color:var(--accent); font-size:20px; letter-spacing:2px;">DESIGNED BY SHREYA SINGH</span>
     </footer>
 
     <script>
-        const MASTER_PASSWORD = "QWqw1234@";
+        const MASTER_PASS = "QWqw1234@";
 
+        // Fixed Database with Sonal Singh and 5 Students
         const database = {
-            "shreya singh": { name: "Shreya Singh", gpa: "9.8", att: 99, status: "PASS" },
-            "shivangi yadav": { name: "Shivangi Yadav", gpa: "9.5", att: 96, status: "PASS" },
-            "sanchita singh": { name: "Sanchita Singh", gpa: "9.2", att: 94, status: "PASS" },
-            "sonal singh": { name: "Sonal Singh", gpa: "8.8", att: 89, status: "PASS" },
-            "smirti singh": { name: "Smirti Singh", gpa: "3.4", att: 42, status: "FAIL" }
+            "shreya singh": { name: "Shreya Singh", att: 99, paid: 30000, due: 0, status: "PASS" },
+            "shivangi yadav": { name: "Shivangi Yadav", att: 95, paid: 15000, due: 15000, status: "PASS" },
+            "sanchita singh": { name: "Sanchita Singh", att: 92, paid: 25000, due: 5000, status: "PASS" },
+            "sonal singh": { name: "Sonal Singh", att: 88, paid: 20000, due: 10000, status: "PASS" },
+            "smirti singh": { name: "Smirti Singh", att: 45, paid: 5000, due: 25000, status: "FAIL" }
         };
 
         function handleLogin() {
-            const rawName = document.getElementById('userInput').value.trim().toLowerCase();
-            const pass = document.getElementById('passInput').value;
+            const nameInput = document.getElementById('userInput').value.toLowerCase().trim();
+            const passInput = document.getElementById('passInput').value;
             const err = document.getElementById('err');
-            
-            if (database[rawName] && pass === MASTER_PASSWORD) {
-                const s = database[rawName];
+
+            if (database[nameInput] && passInput === MASTER_PASS) {
+                const s = database[nameInput];
                 document.getElementById('sName').innerText = s.name;
-                document.getElementById('sGPA').innerText = s.gpa;
-                document.getElementById('sAtt').innerText = s.att + "%";
+                document.getElementById('sPaid').innerText = "₹" + s.paid.toLocaleString();
+                document.getElementById('sDue').innerText = "₹" + s.due.toLocaleString();
+                document.getElementById('sAttText').innerText = s.att + "%";
                 
                 const badge = document.getElementById('resBadge');
-                badge.innerText = "STATUS: " + s.status;
+                badge.innerText = s.status;
                 badge.className = "badge " + (s.status === "PASS" ? "pass" : "fail");
-                
-                document.getElementById('sGPA').style.color = (s.status === "FAIL" ? "var(--danger)" : "var(--success)");
 
                 showPage('dashPage');
                 document.getElementById('loginNavBtn').style.display = 'none';
+                setTimeout(() => { document.getElementById('barFill').style.width = s.att + "%"; }, 500);
                 err.style.display = 'none';
-                
-                setTimeout(() => { document.getElementById('barFill').style.width = s.att + "%"; }, 600);
             } else {
                 err.style.display = 'block';
             }
         }
 
         function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => {
-                p.classList.remove('active');
-                p.style.display = 'none'; // Ensure previous page is hidden
-            });
-            const next = document.getElementById(id);
-            next.style.display = 'block'; // Show new page
-            setTimeout(() => next.classList.add('active'), 50); // Small delay to trigger animation
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
             window.scrollTo(0,0);
         }
 
-        function logout() {
-            showPage('homePage');
-            document.getElementById('loginNavBtn').style.display = 'block';
-            document.getElementById('userInput').value = '';
-            document.getElementById('passInput').value = '';
-            document.getElementById('barFill').style.width = '0%';
-        }
-
-        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
-
         function updateTime() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString();
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
             setTimeout(updateTime, 1000);
         }
     </script>
