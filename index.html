@@ -7,51 +7,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --primary: #0f172a; --accent: #6366f1; --bg: #f8fafc; --glass: rgba(255, 255, 255, 0.85); --text: #1e293b;
-            --danger: #ff4757; --success: #2ed573;
+            --primary: #0f172a; --accent: #6366f1; --bg: #f8fafc; --glass: rgba(255, 255, 255, 0.8); --text: #1e293b;
+            --danger: #ff4757; --success: #2ed573; --white: #ffffff;
         }
         .dark-theme {
-            --primary: #1e293b; --accent: #818cf8; --bg: #020617; --glass: rgba(30, 41, 59, 0.7); --text: #f1f5f9;
+            --primary: #1e293b; --accent: #818cf8; --bg: #020617; --glass: rgba(30, 41, 59, 0.7); --text: #f1f5f9; --white: #111111;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        @keyframes reveal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        /* Smooth Page Entrance Animation */
+        @keyframes reveal { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
+        /* Navigation */
         nav { background: var(--glass); backdrop-filter: blur(15px); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
         .college-logo { width: 55px; height: 55px; border-radius: 50%; border: 2px solid var(--accent); background: white; object-fit: contain; }
+        .logo-text { font-weight: 800; font-size: 16px; line-height: 1.2; }
         
-        .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
-        .page { display: none; animation: reveal 0.6s ease forwards; }
-        .page.active { display: block; }
+        .container { padding: 40px 5%; max-width: 1200px; margin: auto; position: relative; }
+        .page { display: none; opacity: 0; }
+        .page.active { display: block; animation: reveal 0.6s ease forwards; }
 
+        /* Hero Section with Parallax Effect */
         .hero { 
             text-align: center; padding: 80px 20px; border-radius: 40px; margin-bottom: 40px;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(168, 85, 247, 0.9)), url('https://images.unsplash.com/photo-1541339907198-e08756defe93?auto=format&fit=crop&w=1200&q=80');
             background-size: cover; background-blend-mode: overlay; color: white; box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+            animation: reveal 0.8s ease forwards;
         }
+        .hero h1 { font-size: clamp(30px, 6vw, 55px); font-weight: 800; margin-bottom: 10px; text-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        .card { background: var(--glass); backdrop-filter: blur(20px); padding: 30px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.05); text-align: center; }
-        .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.12); border-color: var(--accent); }
-
+        /* Glass Cards with Glow */
+        .card { background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.05); text-align: center; }
+        .card:hover { transform: translateY(-12px) scale(1.03); box-shadow: 0 30px 60px rgba(0,0,0,0.12); border-color: var(--accent); }
+        
+        /* Expert Buttons with Icons & Glow */
         .main-btn { 
-            display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: white; border: none; 
+            display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: var(--white); border: none; 
             padding: 12px 28px; border-radius: 15px; font-weight: 700; cursor: pointer; text-transform: uppercase; 
             font-size: 11px; letter-spacing: 1px; box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
         }
-        .main-btn:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.2); }
+        .main-btn:hover { background: var(--primary); transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 25px rgba(0,0,0,0.2); }
+        .main-btn:active { transform: scale(0.95); }
 
         input { width: 100%; padding: 15px; margin-top: 15px; border-radius: 15px; border: 2px solid rgba(0,0,0,0.05); background: #fff; color: #000; outline: none; font-size: 14px; }
         input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
 
+        /* Badge Logic */
         .badge { display: inline-block; padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 12px; margin-top: 15px; letter-spacing: 1px; }
         .pass { background: rgba(46, 213, 115, 0.2); color: var(--success); border: 2px solid var(--success); box-shadow: 0 0 20px rgba(46, 213, 115, 0.3); }
         .fail { background: rgba(255, 71, 87, 0.2); color: var(--danger); border: 2px solid var(--danger); box-shadow: 0 0 20px rgba(255, 71, 87, 0.3); }
 
+        /* Footer */
         footer { background: var(--primary); color: white; padding: 60px 5%; text-align: center; margin-top: 60px; border-radius: 50px 50px 0 0; }
-        .shreya-credit { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 3px; display: block; margin-top: 20px; font-size: 18px; }
+        .shreya-credit { color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 3px; display: block; margin-top: 20px; font-size: 18px; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
 
         #clock { font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 8px 20px; border-radius: 50px; font-size: 14px; border: 1px solid var(--accent); }
     </style>
@@ -61,15 +72,12 @@
     <nav>
         <div class="logo-area" onclick="showPage('homePage')">
             <img src="logo.gif" alt="SGRPG Logo" class="college-logo">
-            <div style="line-height:1.2;">
-                <p style="font-weight:800; font-size:16px;">S.G.R.P.G. COLLEGE</p>
-                <p style="font-size:11px; font-weight:600; color:var(--accent)">DOBHI, JAUNPUR</p>
-            </div>
+            <div class="logo-text">S.G.R.P.G. COLLEGE<br><span style="font-weight:400; font-size:11px; color:var(--accent)">DOBHI, JAUNPUR</span></div>
         </div>
         <div style="display:flex; align-items:center; gap:15px;">
             <div id="clock">00:00:00</div>
             <button class="main-btn" onclick="toggleTheme()" style="background:#475569; padding:10px;">🌓</button>
-            <button class="main-btn" onclick="showPage('loginPage')" id="loginBtn"><span>👤</span> LOGIN</button>
+            <button class="main-btn" onclick="showPage('loginPage')" id="loginNavBtn"><span>✨</span> LOGIN</button>
         </div>
     </nav>
 
@@ -77,64 +85,66 @@
         
         <div id="homePage" class="page active">
             <div class="hero">
-                <h1 style="font-size: clamp(30px, 6vw, 55px);">Academic Elite Portal</h1>
-                <p style="max-width: 750px; margin: 25px auto; font-size: 18px; opacity: 0.9;">Empowering students of S. G. R. P. G. College with advanced academic analytics and resource management.</p>
-                <button class="main-btn" style="background:white; color:var(--accent); padding:18px 45px; font-size:14px;" onclick="showPage('loginPage')"><span>🚀</span> GET STARTED</button>
+                <h1>Academic Intelligence Portal</h1>
+                <p style="max-width: 750px; margin: 25px auto; font-size: 18px; opacity: 0.9;">Secure Student Information and Management System of S. G. R. P. G. College Dobhi Jaunpur.</p>
+                <button class="main-btn" style="background:white; color:var(--accent); padding:18px 45px; font-size:14px;" onclick="showPage('loginPage')"><span>🚀</span> ENTER PORTAL</button>
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
-                <div class="card">
-                    <h2 style="font-size: 24px;">📊 Results Hub</h2>
-                    <p style="margin: 15px 0; color: #64748b; font-size: 15px;">Check your CGPA and individual subject grades with deep academic analytics.</p>
+                <div class="card" style="animation: reveal 0.6s ease 0.1s forwards; opacity: 0;">
+                    <span style="font-size: 40px;">📊</span>
+                    <h2 style="margin: 15px 0 10px 0;">Performance Hub</h2>
+                    <p style="margin-bottom: 20px; color: #64748b; font-size: 15px;">Access real-time analytics regarding your CGPA, semester results, and internal grades.</p>
                     <button class="main-btn" onclick="showPage('loginPage')"><span>✔️</span> VIEW RESULTS</button>
                 </div>
-                <div class="card">
-                    <h2 style="font-size: 24px;">🏢 Campus Location</h2>
-                    <p style="margin: 15px 0; color: #64748b; font-size: 15px;">Official Campus situated in Kerakat, Dobhi, Jaunpur. Dedicated to excellence.</p>
-                    <button class="main-btn" style="background:#64748b" onclick="openMap()"><span>📍</span> OPEN MAPS</button>
+                <div class="card" style="animation: reveal 0.6s ease 0.2s forwards; opacity: 0;">
+                    <span style="font-size: 40px;">📍</span>
+                    <h2 style="margin: 15px 0 10px 0;">Campus Location</h2>
+                    <p style="margin-bottom: 20px; color: #64748b; font-size: 15px;">Official SGRPG Campus situated in Dobhi, Jaunpur. Dedicated to academic growth.</p>
+                    <button class="main-btn" style="background:#64748b" onclick="window.open('http://googleusercontent.com/maps.google.com/9')"><span>🌐</span> GEOLOCATION</button>
                 </div>
             </div>
         </div>
 
         <div id="loginPage" class="page">
-            <div class="card" style="max-width: 450px; margin: 60px auto; border: 2px solid var(--accent);">
+            <div class="card" style="max-width: 450px; margin: 60px auto; text-align: center; border: 2px solid var(--accent); animation: reveal 0.6s ease forwards;">
                 <img src="logo.gif" width="80" style="margin-bottom:20px;">
-                <h2 style="color: var(--primary); letter-spacing: -1px; font-size: 28px;">Secure Authentication</h2>
-                <p style="font-size:13px; color:#64748b; margin-bottom:20px;">Institutional Login with Full Name</p>
-                <input type="text" id="userInput" placeholder="Full Student Name (e.g. Shreya Singh)">
+                <h2 style="color: var(--primary); letter-spacing: -1px; font-size: 28px;">Institutional Login</h2>
+                <p style="font-size:13px; color:#64748b; margin-bottom:20px;">Provide Full Student Name (e.g. Shreya Singh)</p>
+                <input type="text" id="userInput" placeholder="Authorized Name (Any Case)">
                 <input type="password" id="passInput" placeholder="Password (QWqw1234@)">
-                <button class="main-btn" style="width:100%; margin-top:25px; padding:18px; font-size:14px;" onclick="handleLogin()"><span>🔒</span> AUTHORIZE LOGIN</button>
-                <p id="err" style="color:var(--danger); font-size:12px; margin-top:15px; display:none; font-weight:800;">❌ ACCESS DENIED: INVALID CREDENTIALS</p>
+                <button class="main-btn" style="width:100%; margin-top:25px; padding:18px; font-size:14px;" onclick="handleLogin()"><span>🔒</span> AUTHORIZE ENTRY</button>
+                <p id="err" style="color:var(--danger); font-size:12px; margin-top:15px; display:none; font-weight:800; animation: reveal 0.3s ease;">❌ ERROR: INVALID CREDENTIALS PROVIDED!</p>
             </div>
         </div>
 
         <div id="dashPage" class="page">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-                <h1>WELCOME / <span id="sName" style="color:var(--accent)">-</span></h1>
+                <h1>DASHBOARD / <span id="sName" style="color:var(--accent)">-</span></h1>
                 <button class="main-btn" style="background:var(--danger);" onclick="logout()"><span>🚪</span> SIGN OUT</button>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                <div class="card">
+                <div class="card" style="animation: reveal 0.6s ease 0.1s forwards; opacity: 0;">
                     <p style="font-size:12px; font-weight:800; color:#64748b; letter-spacing:2px;">ATTENDANCE SCORE</p>
                     <h2 style="font-size:50px; margin:10px 0;" id="sAtt">0%</h2>
                     <div style="width:100%; height:12px; background:#e2e8f0; border-radius:20px; overflow:hidden;">
                         <div id="barFill" style="height:100%; background:var(--accent); width:0; transition: 2s ease-out;"></div>
                     </div>
                 </div>
-                <div class="card">
-                    <p style="font-size:11px; font-weight:800; color:#64748b; letter-spacing:2px;">SEMESTER CGPA</p>
+                <div class="card" style="animation: reveal 0.6s ease 0.2s forwards; opacity: 0;">
+                    <p style="font-size:12px; font-weight:800; color:#64748b; letter-spacing:2px;">ACADEMIC standing</p>
                     <h2 style="font-size:50px; margin:10px 0;" id="sGPA">0.0</h2>
                     <div id="resBadge" class="badge">STATUS: -</div>
                 </div>
             </div>
 
-            <div class="card" style="margin-top:40px; text-align: left;">
-                <h3 style="border-left: 6px solid var(--accent); padding-left: 20px; font-size: 22px;">Academic Repository (PCM)</h3>
+            <div class="card" style="margin-top:40px; text-align: left; animation: reveal 0.6s ease 0.3s forwards; opacity: 0;">
+                <h3 style="border-left: 6px solid var(--accent); padding-left: 20px; font-size: 22px;">Institutional Resources (PCM)</h3>
                 <div style="margin-top:25px; display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px;">
-                    <button class="main-btn" style="background:var(--white); color:var(--text); border: 1px solid #ddd;" onclick="alert('Accessing Physics Modules...')"><span>📄</span> PHYSICS NOTES</button>
-                    <button class="main-btn" style="background:var(--white); color:var(--text); border: 1px solid #ddd;" onclick="alert('Accessing Chemistry Modules...')"><span>🧪</span> CHEMISTRY NOTES</button>
-                    <button class="main-btn" style="background:var(--white); color:var(--text); border: 1px solid #ddd;" onclick="alert('Accessing Mathematics Modules...')"><span>📐</span> MATHS SYLLABUS</button>
+                    <button class="main-btn" style="background:#f1f5f9; color:#1e293b; border: 1px solid #ddd;" onclick="alert('Accessing Physics Modules...')"><span>📄</span> PHYSICS NOTES</button>
+                    <button class="main-btn" style="background:#f1f5f9; color:#1e293b; border: 1px solid #ddd;" onclick="alert('Accessing Chemistry Modules...')"><span>🧪</span> CHEMISTRY NOTES</button>
+                    <button class="main-btn" style="background:#f1f5f9; color:#1e293b; border: 1px solid #ddd;" onclick="alert('Accessing Mathematics Modules...')"><span>📐</span> MATHS SYLLABUS</button>
                 </div>
             </div>
         </div>
@@ -143,15 +153,15 @@
 
     <footer>
         <h2 style="letter-spacing: 1px;">S. G. R. P. G. COLLEGE DOBHI JAUNPUR</h2>
-        <p style="font-size:14px; opacity:0.8; margin-top:15px; cursor:pointer;" onclick="openMap()">
-            📍 KERAKAT, DOBHI, JAUNPUR, UTTAR PRADESH 222149
+        <p style="font-size:14px; opacity:0.8; margin-top:15px; cursor:pointer;" onclick="window.open('https://www.google.com/maps/search/?api=1&query=S.G.R0')">
+            📍 Kerakat, subdomain, Jaunpur, Subdistrict, Jaunpur, Uttar Pradesh 222149
         </p>
-        <span class="shreya-credit">DESIGNED AND DEVELOPED BY SHREYA SINGH</span>
-        <p style="margin-top:30px; font-size:11px; opacity:0.5;">© 2026 ELITE ACADEMIC INFORMATION SYSTEM</p>
+        <span class="shreya-credit">DESIGNED BY SHREYA SINGH</span>
+        <p style="margin-top:30px; font-size:11px; opacity:0.5;">© 2026 ELITE ACADEMIC PORTAL</p>
     </footer>
 
     <script>
-        const MASTER_PASS = "QWqw1234@";
+        const MASTER_PASSWORD = "QWqw1234@";
 
         const database = {
             "shreya singh": { name: "Shreya Singh", gpa: "9.8", att: 99, status: "PASS" },
@@ -166,7 +176,7 @@
             const pass = document.getElementById('passInput').value;
             const err = document.getElementById('err');
             
-            if (database[rawName] && pass === MASTER_PASS) {
+            if (database[rawName] && pass === MASTER_PASSWORD) {
                 const s = database[rawName];
                 document.getElementById('sName').innerText = s.name;
                 document.getElementById('sGPA').innerText = s.gpa;
@@ -179,7 +189,7 @@
                 document.getElementById('sGPA').style.color = (s.status === "FAIL" ? "var(--danger)" : "var(--success)");
 
                 showPage('dashPage');
-                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('loginNavBtn').style.display = 'none';
                 err.style.display = 'none';
                 
                 setTimeout(() => { document.getElementById('barFill').style.width = s.att + "%"; }, 600);
@@ -189,21 +199,22 @@
         }
 
         function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+                p.style.display = 'none'; // Ensure previous page is hidden
+            });
+            const next = document.getElementById(id);
+            next.style.display = 'block'; // Show new page
+            setTimeout(() => next.classList.add('active'), 50); // Small delay to trigger animation
             window.scrollTo(0,0);
         }
 
         function logout() {
             showPage('homePage');
-            document.getElementById('loginBtn').style.display = 'block';
+            document.getElementById('loginNavBtn').style.display = 'block';
             document.getElementById('userInput').value = '';
             document.getElementById('passInput').value = '';
             document.getElementById('barFill').style.width = '0%';
-        }
-
-        function openMap() {
-            window.open("https://www.google.com/maps?q=S.G.R.P.G.+College+Dobhi+Jaunpur", '_blank');
         }
 
         function toggleTheme() { document.body.classList.toggle('dark-theme'); }
